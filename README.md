@@ -172,7 +172,7 @@ ax.legend(custom_lines, ['20 Day Mean Average','Upper Bound','Lower Bound'],loc=
 
 ### Modeling Overview
 
-### Our Models
-After using Qlib to process our data into an acceptible format, we can use the features of XGBoost modeling to create models.
+### Our Models - Level 1 Data
+After using Qlib to process our data into an acceptible format, we can use the features of XGBoost modeling to create models. Documentation for how XGBoost can be applied to stock market data can be found [here](https://www.kaggle.com/mtszkw/xgboost-for-stock-trend-prices-prediction). An application of this modeling can be found in the src folder (xgboostmodel.ipynb), and the result of the modeling can be found below.
 
 
