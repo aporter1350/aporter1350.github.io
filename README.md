@@ -8,7 +8,7 @@ The framework of our pipeline is described by the following:
 ## Acquiring level 1 and level 2 data
 People have been trying to predict the stock market for centuries. Many investment strategies involve using different types of market data to predict future stock behavior. With advancements in acquiring real time market book data, investors can now apply many different types of analyses to identify new trading opportunities that could be profitable for investors. But this comes at a cost, streaming data in real time requires a thoroughly vetted pipeline that can process and store data in a way that is flexible for use. This often requires customized hardware and a dedicated location for storing incoming streams of data.
 
-The first part of our pipeline involved collecting level 1 and level 2 data. Data allocation was done using a cloud platform [link](https://iexcloud.io/blog/how-to-get-market-data-in-python). IEX cloud is a platform that provides financial data to clients in order to use IEX cloud in python users must download [pyEx](https://github.com/timkpaine/pyEX) and create an account on IEX cloud in order to receive an API key for streaming. Level 1 data is fairly easy to acquire and can be done in python.
+The first part of our pipeline involved collecting level 1 and level 2 data. Data allocation was done using a cloud [platform](https://iexcloud.io/blog/how-to-get-market-data-in-python). IEX cloud is a platform that provides financial data to clients in order to use IEX cloud in python users must download [pyEx](https://github.com/timkpaine/pyEX) and create an account on IEX cloud in order to receive an API key for streaming. Level 1 data is fairly easy to acquire and can be done in python.
 
 ```
 import pyEX as p
