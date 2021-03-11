@@ -79,7 +79,7 @@ plt.ylabel("Close", fontsize=15)
 plt.xlabel("Date", fontsize=15)
 ax.legend(custom_lines, ['EMA','Close'],loc='upper left',fontsize=15)
 ```
-<img width="726", src="https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/EMAL1.png">
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/EMAL1.png)
 
 ### Moving Average Convergence Divergence (MACD)
 MACD is a trend following momentum indicator and is calculated by subtracting a 26 period EMA from a 12 period EMA. This results in the MACD line. A 9 period EMA is often referred to as the signal line and is usually plotted on top of the MACD line. This functions as a signal to suggest when to buy and sell. When the MACD crosses above the signal line this would indicate to buy and similarly below the signal line indicates when to sell.
