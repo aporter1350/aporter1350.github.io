@@ -3,7 +3,7 @@ Welcome to our blog for CATS (Constructing Algorithmic Trading Structures) — a
 
 ## Pipeline Overview
 The framework of our pipeline is described by the following:
-<img width="726" alt="Screen Shot 2021-03-11 at 10 14 55 AM" src="https://user-images.githubusercontent.com/78179650/110818712-220b6280-8253-11eb-9587-64cbc6e78f34.png">
+<img width="726" alt="Screen Shot 2021-03-11 at 10 14 55 AM" src="https://user-images.githubusercontent.com/78179650/110818712-220b6280-8253-11eb-9587-64cbc6e78f34.png">  
 In the following sections we will discuss each part of the pipeline in further detail.
 
 ## Acquiring level 1 and level 2 data
@@ -36,7 +36,7 @@ c.deepSSE(symbol,'book',on_data=tmp.append)
 ```
 
 ## Data Processing
-One of the most important tools for data processing is Qlib, an AI-oriented investment platform. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib). Qlib contains an extensive framework of modules that all serve different purposes in market data processing. However, these modules are designed to be standalone pieces of code, which in turn allows us to focus on the ones that are most relevant to our project.
+One of our main tools for processing data is Qlib, an AI-oriented investment platform designed by Microsoft. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib). Qlib contains an extensive framework of modules that all serve different purposes in market data processing. However, these modules are designed to be standalone pieces of code, which in turn allows us to focus on the ones that are most relevant to our project.
 
 ### Dumping data into Qlib
 Extensive information on how to input, or "dump" data into Qlib can be found in the above documentation and is also described above. However, in some cases  preprocessing of the data might be required in order to successfully dump data into Qlib. This might be the case when the data contains duplicate values, etc. An example of a dataset that presents this issue (sampleMSFTdata.csv), as well as a preprocessing script to fix this problem (qlibdump.py), can be found in the src folder.
