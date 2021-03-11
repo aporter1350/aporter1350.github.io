@@ -35,19 +35,19 @@ c.deepSSE(symbol,'book',on_data=tmp.append)
 ```
 
 ## Data Processing
-One of the most important tools for data processing is Qlib, an AI-oriented investment platform. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib).
+One of the most important tools for data processing is Qlib, an AI-oriented investment platform. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib). Qlib contains an extensive framework of modules that all serve different purposes in market data processing. However, these modules are designed to be standalone pieces of code, which in turn allows us to focus on the ones that are most relevant to our project.
 
 ### Dumping data into Qlib
-Extensive information on how to input, or "dump" data into Qlib can be found in the above documentation. However, in some cases further preprocessing of the data might be required in order to successfully dump data into Qlib. This might be the case when the data contains duplicate values, etc. An example of a dataset that presents this problem (sampleMSFTdata.csv), as well as a preprocessing script to fix this problem (qlibdump.py), can be found in the src folder.
+Extensive information on how to input, or "dump" data into Qlib can be found in the above documentation and is also described above. However, in some cases  preprocessing of the data might be required in order to successfully dump data into Qlib. This might be the case when the data contains duplicate values, etc. An example of a dataset that presents this issue (sampleMSFTdata.csv), as well as a preprocessing script to fix this problem (qlibdump.py), can be found in the src folder.
 
 ### Qlib Processing Classes
-Qlib provides many useful data-processing child classes. An exhaustive list can be found in the aforementioned documentation, but the ones that are most relevant to our project can be found in the processor (processor.py). The processor also contains some custom-built child classes that we created to process our specific datasets. For example, the FormatLevelTwo child class was created to reformat realtime level 2 data obtained from the IEX cloud service. 
+Qlib provides many useful data-processing child classes. An exhaustive list can be found in the aforementioned documentation, but the ones that are most relevant to our project can be found in the processor (processor.py). The processor also contains some custom-built child classes that we created to process our specific datasets. For example, the FormatLevelTwo child class was created to reformat realtime level 2 data obtained from the IEX cloud service. An example of how these child classes can be used to process data is provided in the src file (processorexample.ipynb).
 
 ## Modeling
-
 
 ### Modeling Overview
 
 ### Our Models
+After using Qlib to process our data into an acceptible format, we can use the features of XGBoost modeling to create models.
 
 
