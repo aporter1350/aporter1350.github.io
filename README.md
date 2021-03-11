@@ -179,7 +179,6 @@ ax.legend(custom_lines, ['20 Day Mean Average','Upper Bound','Lower Bound'],loc=
 ### Our Models - Level 1 Data
 After using Qlib to process our data into an acceptible format, we can use the features of XGBoost modeling to create models. This process of XGBoost modeling can be applied to our level 1 IEX stock data. That is, we can create an XGBoost model that trains on technical indicators (in this case, we use the MACD) to try to predict the price of IEX stock at any given time. Documentation for how XGBoost can be applied to stock market data can be found [here](https://www.kaggle.com/mtszkw/xgboost-for-stock-trend-prices-prediction). The following is an application of this modeling that can also be found in the src folder (XGBoostModelLevel1.ipynb), and the result of the modeling can be found below.
 ```
-
 import os
 import numpy as np
 import pandas as pd
@@ -311,7 +310,10 @@ fig.show()
 (If only the chart is visible, try viewing this blog on our [themed webpage](https://aporter1350.github.io/)!)
 
 ### Our Models - Level 2 Data
-We also created an XGBoost model for our level 2 IEX market data. The process for creating this model was very similar as the above model. However, this time we are instead predicting a weighted average of the bid and ask prices, since level 2 data might not contain the actual prices at which a stock was traded at. The results of this model can be found below. 
+We also created an XGBoost model for our level 2 IEX market data. The process for creating this model was very similar as the above model (XGBoostModelLevel2.ipynb). However, this time we are instead predicting a weighted average of the bid and ask prices, since level 2 data might not contain the actual prices at which a stock was traded at. The code and results of this model can be found below. 
+```
+
+```
 ![newplot (6)](https://user-images.githubusercontent.com/78179650/110849041-5fccb300-8274-11eb-9498-3a36308f3880.png)  
 (If only the chart is visible, try viewing this blog on our [themed webpage](https://aporter1350.github.io/)!)
 As you can see, this particular model was able to accurately track changes in the price, but also consistently predicted much lower values of the weighted price than the actual ones. Additionally, the model appears to predict two prices at certain points in time. These anomalies can be attributed to the fact that this model only included an hour's worth of data. As a result, some of the features of XGBoosting might not perform as well as they otherwise would. Additionally, our weighting of the bid and ask prices to calculate the weighted price might not be a accurate representation of the actual trade prices of the IEX stock.
