@@ -318,7 +318,133 @@ fig.show()
 ### Our Models - Level 2 Data
 We also created an XGBoost model for our level 2 IEX market data. The process for creating this model was very similar as the above model (XGBoostModelLevel2.ipynb). However, this time we are instead predicting a weighted average of the bid and ask prices, since level 2 data might not contain the actual prices at which a stock was traded at. The code and results of this model can be found below. 
 ```
+import pyEX as p
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import os
+import numpy as np
+import pandas as pd
+import xgboost as xgb
+import matplotlib.pyplot as plt
+from xgboost import plot_importance, plot_tree
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split, GridSearchCV
+import plotly as py
+import plotly.io as pio
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+from warnings import simplefilter
+simplefilter(action='ignore', category=FutureWarning)
+simplefilter(action='ignore', category=DeprecationWarning)
 
+init_notebook_mode(connected=True)
+
+#Input data and create a weighted average of bid and ask prices
+df = pd.read_csv('processedlevel2data.csv')
+df['average'] = df[['bidprice', 'askprice']].mean(axis=1)
+df['average'] = np.where(df['average'] < 150, df[['bidprice', 'askprice']].max(axis=1), df['average'])
+df['time'] = df['asktimestamp'].copy()
+df.time.fillna(df.bidtimestamp, inplace=True)
+df = df[df.average != 0]
+
+
+# Change default background color for all visualizations
+layout=go.Layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(103, 128, 159, .8)')
+fig = go.Figure(layout=layout)
+fig.update_layout(
+    font_color="white",
+)
+templated_fig = pio.to_templated(fig)
+pio.templates['my_template'] = templated_fig.layout.template
+pio.templates.default = 'my_template'
+
+
+df = df.iloc[33:] # Because of moving averages and MACD line
+df = df[:-1]      # Because of shifting close price
+
+df.index = range(len(df))
+
+test_size  = 0.15
+valid_size = 0.15
+
+test_split_idx  = int(df.shape[0] * (1-test_size))
+valid_split_idx = int(df.shape[0] * (1-(valid_size+test_size)))
+
+train_df  = df.loc[:valid_split_idx].copy()
+valid_df  = df.loc[valid_split_idx+1:test_split_idx].copy()
+test_df   = df.loc[test_split_idx+1:].copy()
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=train_df.time, y=train_df.average, name='Training'))
+fig.add_trace(go.Scatter(x=valid_df.time, y=valid_df.average, name='Validation'))
+fig.add_trace(go.Scatter(x=test_df.time,  y=test_df.average,  name='Test'))
+fig.show()
+
+drop_cols = ['symbol', 'messageType', 'bidtimestamp', 'asktimestamp', 'time']
+
+train_df = train_df.drop(drop_cols, 1)
+valid_df = valid_df.drop(drop_cols, 1)
+test_df  = test_df.drop(drop_cols, 1)
+
+
+y_train = train_df['average'].copy()
+X_train = train_df.drop(['average'], 1)
+
+y_valid = valid_df['average'].copy()
+X_valid = valid_df.drop(['average'], 1)
+
+y_test  = test_df['average'].copy()
+X_test  = test_df.drop(['average'], 1)
+
+X_train.info()
+
+parameters = {
+    'n_estimators': [100, 200, 300, 400],
+    'learning_rate': [0.001, 0.005, 0.01, 0.05],
+    'max_depth': [8, 10, 12, 15],
+    'gamma': [0.001, 0.005, 0.01, 0.02],
+    'random_state': [42]
+}
+
+eval_set = [(X_train, y_train), (X_valid, y_valid)]
+model = xgb.XGBRegressor(eval_set=eval_set, objective='reg:squarederror', verbose = False)
+
+model = xgb.XGBRegressor(eval_set = [(X_train, y_train), (X_valid, y_valid)], objective='reg:squarederror')
+model.fit(X_train, y_train, eval_set=eval_set, verbose=False)
+
+y_pred = model.predict(X_test)
+print(f'y_true = {np.array(y_test)[:50]}')
+print(f'y_pred = {y_pred[:50]}')
+
+predicted_prices = df.loc[test_split_idx+1:].copy()
+predicted_prices['Close'] = y_pred
+
+fig = make_subplots(rows=2, cols=1)
+fig.add_trace(go.Scatter(x=df.time, y=df.average,
+                         name='Truth',
+                         marker_color='LightSkyBlue'), row=1, col=1)
+
+fig.add_trace(go.Scatter(x=predicted_prices.time,
+                         y=predicted_prices.average,
+                         name='Prediction',
+                         marker_color='MediumPurple'), row=1, col=1)
+
+fig.add_trace(go.Scatter(x=predicted_prices.time,
+                         y=y_test,
+                         name='Truth',
+                         marker_color='LightSkyBlue',
+                         showlegend=False), row=2, col=1)
+
+fig.add_trace(go.Scatter(x=predicted_prices.time,
+                         y=y_pred,
+                         name='Prediction',
+                         marker_color='MediumPurple',
+                         showlegend=False), row=2, col=1)
+
+fig.show()
 ```
 ![newplot (6)](https://user-images.githubusercontent.com/78179650/110849041-5fccb300-8274-11eb-9498-3a36308f3880.png)  
 (If only the chart is visible, try viewing this blog on our [themed webpage](https://aporter1350.github.io/)!)
