@@ -174,7 +174,7 @@ ax.legend(custom_lines, ['20 Day Mean Average','Upper Bound','Lower Bound'],loc=
 
 ### Our Models - Level 1 Data
 After using Qlib to process our data into an acceptible format, we can use the features of XGBoost modeling to create models. This process of XGBoost modeling can be applied to our level 1 IEX stock data. That is, we can create an XGBoost model that trains on technical indicators (in this case, we use the MACD) to try to predict the price of IEX stock at any given time. Documentation for how XGBoost can be applied to stock market data can be found [here](https://www.kaggle.com/mtszkw/xgboost-for-stock-trend-prices-prediction). An application of this modeling can be found in the src folder (xgboostmodel.ipynb), and the result of the modeling can be found below.
-![newplot (7)](https://user-images.githubusercontent.com/78179650/110848197-71618b00-8273-11eb-8c16-cffd48bce635.png)  
+![newplot (8)](https://user-images.githubusercontent.com/78179650/110850524-7e7f7980-8275-11eb-9554-0eb35dd8871c.png)
 (If only the chart is visible, try viewing this blog on our [themed webpage](https://aporter1350.github.io/)!)
 
 ### Our Models - Level 2 Data
