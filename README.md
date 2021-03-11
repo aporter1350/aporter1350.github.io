@@ -4,6 +4,7 @@ Welcome to our blog for CATS (Constructing Algorithmic Trading Structures) — a
 ## Pipeline Overview
 The framework of our pipeline is described by the following:
 <img width="726" alt="Screen Shot 2021-03-11 at 10 14 55 AM" src="https://user-images.githubusercontent.com/78179650/110818712-220b6280-8253-11eb-9587-64cbc6e78f34.png">
+In the following sections we will discuss each part of the pipeline in further detail.
 
 ## Acquiring level 1 and level 2 data
 People have been trying to predict the stock market for centuries. Many investment strategies involve using different types of market data to predict future stock behavior. With advancements in acquiring real time market book data, investors can now apply many different types of analyses to identify new trading opportunities that could be profitable for investors. But this comes at a cost, streaming data in real time requires a thoroughly vetted pipeline that can process and store data in a way that is flexible for use. This often requires customized hardware and a dedicated location for storing incoming streams of data.
