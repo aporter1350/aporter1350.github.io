@@ -134,14 +134,14 @@ plt.axhline(70, linestyle='--')
 plt.axhline(80, linestyle='--', alpha=0.5)
 plt.axhline(100, linestyle='--', alpha=0.1)
 ```
-![][https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/rsi_L1.png)
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/rsi_L1.png)
 
 We can also derive the RSI values for level 2 data using the bid price. From this dataset you can see that at around 2:35pm we see a dip below 30, this would suggest that the stock is being undervalued and that it may be a good time to buy. And we notice on the plot above that shows the changes in bid price after 2:35 does reveal an increase in market price suggesting it would have been a good time to buy that day.
 
 
 ![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/RSI.png)
 
-##Bollinger Band
+## Bollinger Band
 Bollinger band is one of the more commonly used financial indicators. A bollinger band is calculated by taking two standard deviations away from a simple moving average. The plot is composed of three lines. A simple moving average denoted as the middle line, and an upper and lower band. The standard deviations typically are calculated from a 20 period simple moving average but this number can be modified based on the user. Bollinger bands are typically interpreted based on trend seen in the upper and lower bounds. If the price moves towards the upper bound this would suggest a stock is being over valued and should be sold. If the price moves towards the lower bound suggests the opposite, that the price is being undervalued and should be bought. The bollinger band is meant to show a stocks volatility, when the market is more volatile the bands get larger, less volatile, the bands shrink.
 
 ```
