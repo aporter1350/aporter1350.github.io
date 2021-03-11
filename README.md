@@ -5,6 +5,35 @@ Welcome to our blog for CATS (Constructing Algorithmic Trading Structures) — a
 The framework of our pipeline is described by the following:
 <img width="726" alt="Screen Shot 2021-03-11 at 10 14 55 AM" src="https://user-images.githubusercontent.com/78179650/110818712-220b6280-8253-11eb-9587-64cbc6e78f34.png">
 
+## Acquiring level 1 and level 2 data
+People have been trying to predict the stock market for centuries. Many investment strategies involve using different types of market data to predict future stock behavior. With advancements in acquiring real time market book data, investors can now apply many different types of analyses to identify new trading opportunities that could be profitable for investors. But this comes at a cost, streaming data in real time requires a thoroughly vetted pipeline that can process and store data in a way that is flexible for use. This often requires customized hardware and a dedicated location for storing incoming streams of data.
+
+The first part of our pipeline involved collecting level 1 and level 2 data. Data allocation was done using a cloud platform [link](https://iexcloud.io/blog/how-to-get-market-data-in-python). IEX cloud is a platform that provides financial data to clients in order to use IEX cloud in python users must download [pyEx] (https://github.com/timkpaine/pyEX) and create an account on IEX cloud in order to receive an API key for streaming. Level 1 data is fairly easy to acquire and can be done in python.
+
+```
+import pyEX as p
+c = p.Client(api_token=YOUR API KEY)
+sym='IEX' #stock symbol
+timeframe='5y' #timeframe
+df = c.chartDF(symbol=sym, timeframe=timeframe)
+df.to_csv("~/.qlib/csv_data/5Y_IEX.csv")
+```
+
+To get the data in a format for qlib, open the terminal and type
+
+```
+python scripts/dump_bin.py dump_all --csv_path ~/.qlib/csv_data/IEX.csv --qlib_dir ~/.qlib/qlib_data/iex --include_fields close,high,low,open,volume --date_field_name date
+```
+
+Acquiring level 2 data often involves one of two methods: the first would be to pay a premium to vendors who calculate, organize, and collect ongoing data for you. The alternative method is to stream data for yourself, giving the user more control on incoming data streams. This involves the use of whats called a server sent event. This is a process that enables a user to receive automatic updates from the IEX website. What this means is that a user can create a link to a website using an API key. The script would then check on the website to see if a particular stock has changed. If it has the website will then send information back to the user usually in the form of a dictionary like object consisting of bid price, bid size, ask price, ask size, and the time. And this process can occur indefinitely but keep in mind that most users do not have the storage capacity to run this script forever, it also costs money to receive ongoing level 2 data. So unless you’re paying for a premium subscription, you’re fairly limited in how much data you can retrieve. Streaming can sometimes be considered more efficient because you are receiving the latest available data. Endpoints can be adjusted to specific intervals such as 1second, 5 seconds, or 1 minute.
+
+```
+tmp=[]
+symbol='iex' #stock symbol
+channels='book' #market book data
+c.deepSSE(symbol,'book',on_data=tmp.append)
+```
+
 ## Data Processing
 One of the most important tools for data processing is Qlib, an AI-oriented investment platform. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib).
 
