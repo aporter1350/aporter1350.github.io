@@ -104,10 +104,12 @@ plt.ylabel("MACD", fontsize=15)
 plt.xlabel("Date", fontsize=15)
 ax.legend(custom_lines, ['MACD','Signal'],loc='upper left',fontsize=15)
 ```
-[INSERT L1 IMAGE HERE]
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/MACDL1.png)
+
 We derived MACD using level 2 data from the average weight of a bid price. As you can see from the plot using level 2 data can result in more spurious trends in the data making is harder to parse out information compared to using level 1 data.
 
-[INSERT IMAGE HERE]
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/MACD.png)
+
 ### Relative Strength Index (RSI)
 Relative strength index is a momentum indicator. It measures the magnitude of recent price changes to evaluate overbought or oversold conditions in the price of a stock. The RSI plot ranges from 0 to 100 and is meant to indicate that values greater than 70 indicate that a stock is overbought or overvalued and may be primed for a pullback in price. While an RSI below 30 indicates an oversold or undervalued stock. This measure is derived by calculating the initial average gain or loss during the first 14 timepoints. Each time point after that measures the relative gain or loss of a price. The primary point of an RSI plot is to tell you what kinds of trends are to be expected. RSI and MACD are similar in that both measure the momentum of an asset, however they measure different factors and can sometimes give contradictory results. MACD is meant to show you the relationship between two EMA’s while the RSI measures price change in relation to recent price highs and lows. Many analysts often use RSI and MACD together to provide a better technical picture of a market.
 ```
@@ -132,11 +134,12 @@ plt.axhline(70, linestyle='--')
 plt.axhline(80, linestyle='--', alpha=0.5)
 plt.axhline(100, linestyle='--', alpha=0.1)
 ```
-[INSERT L1 IMAGE RSI]
+![][https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/rsi_L1.png)
 
 We can also derive the RSI values for level 2 data using the bid price. From this dataset you can see that at around 2:35pm we see a dip below 30, this would suggest that the stock is being undervalued and that it may be a good time to buy. And we notice on the plot above that shows the changes in bid price after 2:35 does reveal an increase in market price suggesting it would have been a good time to buy that day.
 
-[INSERT IMAGE HERE]
+
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/RSI.png)
 
 ##Bollinger Band
 Bollinger band is one of the more commonly used financial indicators. A bollinger band is calculated by taking two standard deviations away from a simple moving average. The plot is composed of three lines. A simple moving average denoted as the middle line, and an upper and lower band. The standard deviations typically are calculated from a 20 period simple moving average but this number can be modified based on the user. Bollinger bands are typically interpreted based on trend seen in the upper and lower bounds. If the price moves towards the upper bound this would suggest a stock is being over valued and should be sold. If the price moves towards the lower bound suggests the opposite, that the price is being undervalued and should be bought. The bollinger band is meant to show a stocks volatility, when the market is more volatile the bands get larger, less volatile, the bands shrink.
@@ -167,7 +170,7 @@ plt.xlabel("Date", fontsize=15)
 ax.legend(custom_lines, ['20 Day Mean Average','Upper Bound','Lower Bound'],loc='lower right',fontsize=15)
 ```
 
-[INSERT BBL1 here]
+![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/BBL1.png)
 
 ## Modeling
 
