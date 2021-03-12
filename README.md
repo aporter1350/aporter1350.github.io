@@ -113,6 +113,53 @@ ax.legend(custom_lines, ['MACD','Signal'],loc='upper left',fontsize=15)
 ![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/MACDL1.png)
 
 We derived MACD using level 2 data from the average weight of a bid price. As you can see from the plot using level 2 data can result in more spurious trends in the data making is harder to parse out information compared to using level 1 data.
+```
+#Level 2 Data
+L2=pd.read_csv('processedlevel2data.csv')
+#drop na
+L2.dropna(subset=['bidtimestamp', 'asktimestamp'],thresh=1,inplace=True)
+L2.sort_values(by=['bidtimestamp','asktimestamp'],inplace=True)
+L2['bid_rsi']= t.RSI(L2['bidprice'].values.astype(float), period)
+L2['bidmacd'], L2['bidmacdSignal'], L2['bidmacdHist'] = t.MACD(L2['bidprice'].values.astype(float), fastperiod=12, slowperiod=26, signalperiod = 9)
+L2['uppr'], L2['mid'], L2['low']=t.BBANDS(L2['bidprice'].values.astype(float),20)
+bid=L2[['bidprice','bidtimestamp','bid_rsi','bidsize']]
+bid.dropna(inplace=True)
+bid.sort_values(by=['bidtimestamp'],inplace=True)
+bid['bidtimestamp']=pd.to_datetime(bid['bidtimestamp'])
+#MACD for level 2
+custom_lines = [Line2D([0], [0], color='blue', lw=4),
+               Line2D([0], [0], color='red', lw=4)]
+fig=plt.figure(figsize=(15,10), constrained_layout=True)
+plt.rcParams['figure.constrained_layout.use'] = True
+gs = gridspec.GridSpec(nrows=2, ncols=1, wspace=.2, hspace=.3)
+ax0=fig.add_subplot(gs[0,0])
+ax=sns.lineplot(x='bidtimestamp',y='bidprice',data=ask,ax=ax0,color='b')
+ax.set_title('IEX Price Level 2',fontsize=20)
+plt.ylabel("Bid Price", fontsize=15)
+plt.xlabel("Date", fontsize=15)
+ax1=fig.add_subplot(gs[1,0],sharex=ax0)
+ax=sns.lineplot(x='bidtimestamp',y='bidmacd',ci=None,data=ask,ax=ax1,color='b')
+ax.set_title('MACD Chart',fontsize=20)
+plt.axhline(0, linestyle='--', alpha=0.1)
+plt.ylabel("MACD Indicator", fontsize=15)
+plt.xlabel("Date", fontsize=15)
+#bollinger band for level 2
+fig=plt.figure(figsize=(15,10), constrained_layout=True)
+plt.rcParams['figure.constrained_layout.use'] = True
+gs = gridspec.GridSpec(nrows=2, ncols=1, wspace=.2, hspace=.3)
+ax0=fig.add_subplot(gs[0,0])
+ax=sns.lineplot(x='date',y='bidprice',data=L2,ax=ax0)
+ax.set_title('IEX Price Level 1',fontsize=20)
+plt.ylabel("Bid Price", fontsize=15)
+plt.xlabel("Date", fontsize=15)
+ax1=fig.add_subplot(gs[1,0],sharex=ax0)
+ax=sns.lineplot(x='date',y='mid',data=df,ax=ax1,color='orange')
+sns.lineplot(x='date',y='uppr',data=df,ax=ax1,color='green')
+sns.lineplot(x='date',y='low',data=df,ax=ax1,color='red')
+ax.set_title('Bollinger Band',fontsize=20)
+plt.xlabel("Date", fontsize=15)
+ax.legend(custom_lines, ['20 Day Mean Average','Upper Bound','Lower Bound'],loc='lower right',fontsize=15)
+```
 
 ![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/MACD.png)
 
@@ -144,6 +191,34 @@ plt.axhline(100, linestyle='--', alpha=0.1)
 
 We can also derive the RSI values for level 2 data using the bid price. From this dataset you can see that at around 2:35pm we see a dip below 30, this would suggest that the stock is being undervalued and that it may be a good time to buy. And we notice on the plot above that shows the changes in bid price after 2:35 does reveal an increase in market price suggesting it would have been a good time to buy that day.
 
+```
+#RSI for Level 2 data
+from matplotlib.lines import Line2D
+custom_lines = [Line2D([0], [0], color='blue', lw=4),
+               Line2D([0], [0], color='red', lw=4)]
+fig=plt.figure(figsize=(15,10), constrained_layout=True)
+plt.rcParams['figure.constrained_layout.use'] = True
+gs = gridspec.GridSpec(nrows=2, ncols=1, wspace=.2, hspace=.3)
+ax0=fig.add_subplot(gs[0,0])
+ax=sns.lineplot(x='bidtimestamp',y='bidprice',data=bid,ax=ax0,color='b')
+#g=sns.lineplot(x='asktimestamp',y='askprice',data=ask,ax=ax0,color='r')
+ax.set_title('IEX Price Level 2',fontsize=20)
+plt.ylabel("Price", fontsize=15)
+plt.xlabel("Date", fontsize=15)
+#ax.legend(custom_lines, ['Bid','Ask'],loc='lower left',fontsize='large')
+ax1=fig.add_subplot(gs[1,0],sharex=ax0)
+ax=sns.lineplot(x='bidtimestamp',y='bid_rsi',data=bid,ax=ax1,color='b')
+#sns.lineplot(x='asktimestamp',y='ask_rsi',ci=None,data=ask,ax=ax1,color='r')
+ax.set_title('RSI Chart',fontsize=20)
+plt.axhline(0, linestyle='--', alpha=0.1)
+plt.axhline(20, linestyle='--', alpha=0.5)
+plt.axhline(30, linestyle='--')
+plt.ylabel("Relative Strength Index", fontsize=15)
+plt.xlabel("Date", fontsize=15)
+plt.axhline(70, linestyle='--')
+plt.axhline(80, linestyle='--', alpha=0.5)
+plt.axhline(100, linestyle='--', alpha=0.1)
+```
 
 ![](https://raw.githubusercontent.com/aporter1350/aporter1350.github.io/gh-pages/src/images/RSI.png)
 
