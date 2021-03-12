@@ -548,18 +548,10 @@ fig.show()
 As you can see, this particular model was able to accurately track changes in the price, but also consistently predicted much lower values of the weighted price than the actual ones. Additionally, the model appears to predict two prices at certain points in time. These anomalies can be attributed to the fact that this model only included an hour's worth of data. As a result, some of the features of XGBoosting might not perform as well as they otherwise would. Additionally, our weighting of the bid and ask prices to calculate the weighted price might not be a accurate representation of the actual trade prices of the IEX stock.
 
 ## Limitations and future developments
-* **Data retrieval**.
-Data retrieval is one the most difficult issues we face during the development of our project. Since data retrieval could sometimes be really expensive, we have to pay considerable amounts of money to get limited data of the market. Another problem for data retrieval is the storage for the data. Because level 2 market data is more nosier and more in detail, collecting it requires a lot more storage than the level 2 market data. For example, storing 3 days of level 2 data might occupy multiple gigabytes of storage. This could cause a further problem in program execution as it might take the computer several hours to fully process the data.
-
-* **Online servers**.
-As a solution to the data retrieval storage, we think online servers could be employed to our project where all computations and predictions could be done in cloud servers. This is a major trend for financial data analysis because people are using larger and larger datasets that could not be quickly process by local computers and data are stored more often online which provide a higher access speed for cloud serves. The next step for our project would be an independent online server where users of our program could easily upload data from local, transfer data from another online server such as AWS, IEX or Dolphin Database and execute our program online.
-
-* **User interface**.
-In the current state, our program only runs on terminal and takes all inputs from command lines. However, with all of our program's processing and predicting ability, a graphical user interface would be needed for our program to be actually used by potential users. Ideally, we want to build a application that could be both installed windows or mac and executed in a web browser. Not only does it promotes users experience with our program, it also increase interaction efficiency between the user and the computer. With such application, user could run our program with a single click, easily adjust parameters and terminate our program's execution at anytime.
-
-* **Trading executer**.
-Since our program make predictions about the stock prices, it is conceivable that users might wish to use these predictions to determine how they should execute in the financial market. To this end, our project ultimately would consist a trading executer which could automatically execute orders based on the prediction. With this executer, users could simply provide some initial data, and our program would make predictions using those data, determine and execute orders/trades, receive additional data from the market, and make predictions again. This is the closed loop of actions, or continuous automatic trading, that our users could expect from our program. Ofcouse online servers, connections to actual trading platforms and multiple generations of optimization is needed before this loop could be reached, but it does provide some insight on what our next goal should be and where our program is heading towards.
-
+**Data retrieval**
+**Online servers**
+**User interface**
+**Trading executor**
 
 ## Additional Comments
 Trying to predict stock markets can be challenging, it seems that using different types of data and creating new features can vary model performance between level 1 and level 2 data. There are many limitations to predict stock markets in a user accessible way; some of the following are ideas that users may wish to explore 
