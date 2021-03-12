@@ -6,6 +6,12 @@ The framework of our pipeline is described by the following:
 <img width="726" alt="Screen Shot 2021-03-11 at 10 14 55 AM" src="https://user-images.githubusercontent.com/78179650/110818712-220b6280-8253-11eb-9587-64cbc6e78f34.png">  
 In the following sections we will discuss each part of the pipeline in further detail.
 
+After completing this tutorial you will know:
+
+* Different types of stock market data and how to acquire them in a free and accessible way
+* Financial indicators, how they're derived and used to model prediction
+* How to evaluate financial indicators as a method for predicting stock market from both level 1 and level 2 data using XGBoost
+
 ## Acquiring level 1 and level 2 data
 People have been trying to predict the stock market for centuries. Many investment strategies involve using different types of market data to predict future stock behavior. With advancements in acquiring real time market book data, investors can now apply many different types of analyses to identify new trading opportunities that could be profitable for investors. But this comes at a cost, streaming data in real time requires a thoroughly vetted pipeline that can process and store data in a way that is flexible for use. This often requires customized hardware and a dedicated location for storing incoming streams of data.
 
@@ -525,3 +531,8 @@ fig.show()
 (If only the chart is visible, try viewing this blog on our [themed webpage](https://aporter1350.github.io/)!)
 As you can see, this particular model was able to accurately track changes in the price, but also consistently predicted much lower values of the weighted price than the actual ones. Additionally, the model appears to predict two prices at certain points in time. These anomalies can be attributed to the fact that this model only included an hour's worth of data. As a result, some of the features of XGBoosting might not perform as well as they otherwise would. Additionally, our weighting of the bid and ask prices to calculate the weighted price might not be a accurate representation of the actual trade prices of the IEX stock.
 
+## Additional Comments
+Trying to predict stock markets can be challenging, it seems that using different types of data and creating new features can vary model performance between level 1 and level 2 data. There are many limitations to predict stock markets in a user accessible way; some of the following are ideas that users may wish to explore 
+* **Parameter optimization**. We used a grid search prior to fitting the model which can improve performance and optimize features. However there may be other more optimal ways to increase performance such as feature selection, latent factors analyses prior to fitting, and standardizing features by removing the mean and scaling to unit variance. 
+* **Automatic Workflow**. From a procedural standpoint our code was able to acquire data needed to generate financial indicators that could be used for model prediction. However this particular procedure operates in a standalone process such that is does not have the capabilities to acquire ongoing data streams for subsequent model predictions. Users may want to consider upgrading subscriptions to IEX cloud to acquire level 2 data in real time. Upgrading does come at a cost as users will then have to navigate external cloud software to store incoming streams of data and run models using incoming data streams. 
+* **Algorithmic Trading**. Our particular project did not involve the physically buying and selling of stocks. But users may want to consider creating and [account](https://www.tdameritrade.com/why-td-ameritrade/free-stock-trading.page?a=pqm&a=&cid=PSBRA&cid=PSBRA&ef_id=Cj0KCQiAv6yCBhCLARIsABqJTjYBrKDmiozMOKPu0L0Q5ytotP8kF1XxtrPc_SPkYox3uxNuxXCJLn0aAnKcEALw_wcB:G:s&s_kwcid=AL!2521!3!504257488060!e!!g!!td%20ameritrade&referrer=https%3A%2F%2Fwww.google.com%2F) and syncing model results with trades in real time. This often requires the use and knowledge of [Websockets](https://websockets.readthedocs.io/en/stable/). 
