@@ -41,6 +41,28 @@ channels='book' #market book data
 c.deepSSE(symbol,'book',on_data=tmp.append)
 ```
 
+In addition, user could also import level 2 data from online servers. Unlike the IEX process, such process only imports data that users stored on online serves in advance, without obtaining new data from the market. Below is a process that allows a user to import data from Dolphin Database. Note that this process does not transfer data from Dolphin Database directly to our server*. Instead, it downloads the data from Dolphin Database as an intermediate step thus requires some sort of local storage.
+
+```
+# Utilize Dolphin Database saveText function:
+login("admin","123456")
+TableName.saveText("DataPath/FileName.csv",',', true)
+
+# if the data is too large to be put in to RAM and outputed as CSV, use pipeline as well:
+login("admin","123456")
+v = 2015.01M..2016.12M
+def queryData(m){
+    return select * from loadTable("DataPath", "TableName")  # could add addtional query condition here
+    # return select * from loadTable("dfs://stockDB", "stockData")
+}
+def saveData(tb){
+    TableName.saveText("DataPath/FileName.csv",',', true)
+}
+pipeline(each(partial{QueryData}, v),saveData)
+
+python scripts/dump_bin.py dump_all --csv_path ~/.qlib/csv_data/DolphinDB.csv --qlib_dir ~/.qlib/qlib_data/DolphinDB.csv --include_fields v,vw,o,c,h,l,t,n,d --date_field_name t
+```
+
 ## Data Processing
 One of our main tools for processing data is Qlib, an AI-oriented investment platform designed by Microsoft. Extensive documentation for Qlib can be found [here](https://qlib.readthedocs.io/en/latest/), and the official repository can be found [here](https://github.com/microsoft/qlib). Qlib contains an extensive framework of modules that all serve different purposes in market data processing. However, these modules are designed to be standalone pieces of code, which in turn allows us to focus on the ones that are most relevant to our project.
 
